@@ -1,5 +1,6 @@
 import 'package:expense_app/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(ExpenseApp());
 
@@ -22,49 +23,77 @@ class ExpenseApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text("Expense Planner")),
         body: Column(
-            children: (transctions).map((tx) {
-          return Card(
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple,
-                      width: 2,
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  child: Text(
-                    '\$${tx.amount.toString()}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.purple,
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              elevation: 5,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      tx.title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                    const TextField(
+                      decoration: InputDecoration(labelText: "Title"),
                     ),
-                    Text(
-                      tx.date.toString(),
-                      style: const TextStyle(color: Colors.grey),
-                    )
+                    const TextField(
+                      decoration: InputDecoration(labelText: "Amount"),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Add Transactions",
+                        style: TextStyle(color: Colors.purple),
+                      ),
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          );
-        }).toList()),
+            Column(
+                children: (transctions).map((tx) {
+              return Card(
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      child: Text(
+                        '\$${tx.amount.toString()}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tx.title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        Text(
+                          DateFormat.yMMMd().format(tx.date),
+                          style: const TextStyle(color: Colors.grey),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }).toList()),
+          ],
+        ),
       ),
     );
   }
